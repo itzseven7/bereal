@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct BeRealTechnicalTestApp: App {
+    let userRepository = FileUserRepository(fileURL: Bundle.main.url(forResource: "users", withExtension: "json")!)
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView(viewModel: HomeViewModel(repository: userRepository, userPageSize: 10))
         }
     }
 }
