@@ -41,12 +41,12 @@ final class HomeViewModel: ObservableObject {
                 self.allUsers = try await self.userRepository.getUsersList()
             }
             
-            guard let currentPageIndex = self.currentPageIndex, currentPageIndex < allUsers.pages.count else {
+            guard let currentPageIndex = self.currentPageIndex, currentPageIndex + 1 < allUsers.pages.count else {
                 // all pages are loaded
                 return
             }
             
-            let nextPage = allUsers.pages[currentPageIndex]
+            let nextPage = allUsers.pages[currentPageIndex + 1]
             self.users.append(contentsOf: nextPage.users)
             
             self.isLoading = false

@@ -19,7 +19,7 @@ struct HomeView: View {
             Text("Instagram like")
                 .font(.title)
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 16) {
+                LazyHStack(spacing: 16) {
                     ForEach(viewModel.users) { user in
                         UserItemView(user: user)
                             .onAppear {
