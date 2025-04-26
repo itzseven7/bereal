@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct HomeView: View {
+    @Environment(\.modelContext) private var modelContext
+    
     @ObservedObject private var viewModel: HomeViewModel
     
     init(viewModel: HomeViewModel) {
         self._viewModel = .init(wrappedValue: viewModel)
     }
+    
+    @State private var showingSheet = false
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -27,13 +31,44 @@ struct HomeView: View {
                                     viewModel.loadMoreUsers()
                                 }
                             }
+                            .onTapGesture {
+                                viewModel.selectedUser = user
+                                showingSheet = true
+                            }
                     }
                 }
                 .padding(.vertical, 10)
             }
             Spacer()
         }
+        .sheet(isPresented: $showingSheet, onDismiss: {
+//            selectedUser = nil
+//            showingSheet = false
+        }, content: {
+            storyView()
+        })
         .padding()
+    }
+    
+    @ViewBuilder
+    private func storyView() -> some View {
+        if let selectedUser = viewModel.selectedUser {
+            StoryCarouselView(
+                viewModel: StoryCarouselViewModel(
+                    repository: LiveStoryRepository(
+                        localDatasource: CoreDataStoryDatasource(
+                            context: modelContext
+                        ),
+                        remoteDatasource: PicsumRemoteDatasource(
+                            screenSize: UIScreen.main.bounds.size
+                        )
+                    ),
+                    user: selectedUser
+                )
+            )
+        } else {
+            EmptyView()
+        }
     }
 }
 

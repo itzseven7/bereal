@@ -22,6 +22,8 @@ final class HomeViewModel: ObservableObject {
         guard allUsers.pages.isEmpty == false else { return nil }
         return users.count % userPageSize
     }
+    
+    var selectedUser: User?
 
     init(repository: UserRepository, userPageSize: Int) {
         self.userRepository = repository
