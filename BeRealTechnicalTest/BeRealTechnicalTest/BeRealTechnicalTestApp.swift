@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct BeRealTechnicalTestApp: App {
@@ -15,5 +16,6 @@ struct BeRealTechnicalTestApp: App {
         WindowGroup {
             HomeView(viewModel: HomeViewModel(repository: userRepository, userPageSize: 10))
         }
+        .modelContainer(for: [CDStory.self])
     }
 }
