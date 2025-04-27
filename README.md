@@ -1,7 +1,7 @@
 # 📋 State of the Application
 
 - **User fetch** is working, but there is a bug where some users can be loaded several times.
-- **Story loading** works from remote and is saved in the database, but when we launch the app again, the fetch of the image with the URL saved in SwiftData does not work.
+- **Story loading** works from remote and is saved in the database, but when we launch the app again, the fetch of the image with the URL saved in SwiftData does not work. It's because the absolute URL to the app's simulator sandbox changes between different runs so the contentURL saved in SwiftData will be outdated after each launch.
 - **Pagination** is implemented on users but not on stories.
 - **Story state** is not persisted in the database.
 
@@ -20,6 +20,7 @@ The project is separated into three parts (fictive Swift packages):
 
 # 💬 Remarks
 
+- I'm not satisfied with the functional bugs and the UI appearance of the app (I was more focused on the code architecture), so it would have been my first priority for improvements if I had more time
 - I didn't have time to create the actual Swift packages for **Shared**, **Service**, and **Feature** for modularization.
 - I wanted to use **CoreData** to persist stories' information, but I had a bug with Xcode that would duplicate the model and CoreData types, so I went with **SwiftData** (first time using it).
 - I wanted to implement **story state saving** in SwiftData through a repository, but didn't have time.
